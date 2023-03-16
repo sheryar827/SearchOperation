@@ -39,7 +39,8 @@ $app->post('/SearchOperation/Public/UploadSearchOps', function (Request $request
 	if($result == true){
 		$message = array();
 		$message['error'] = false;
-		$message['message'] = 'Data uploaded successfully';
+		$message['message'] = 'Data Uploaded Successfully';
+		$message['blacklist'] = $db->getBlackListData($cnic);
 
 		$response->getBody()->write(json_encode($message));
 		return $response
@@ -50,6 +51,7 @@ $app->post('/SearchOperation/Public/UploadSearchOps', function (Request $request
 		$message = array();
 		$message['error'] = true;
 		$message['message'] = 'Some error occured';
+		$message['blacklist'] = $db->getBlackListData($cnic);
 		$response->getBody()->write(json_encode($message));
 		return $response
 					->withHeader('Content-type', 'application/json')

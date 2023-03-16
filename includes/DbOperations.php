@@ -65,13 +65,13 @@
         }
 
 
-        public function getDLMSData($cnicForSubInfo){
+        public function getBlackListData($cnicForSubInfo){
             $result = array();
             
             $value = $cnicForSubInfo;
-			$sql = "exec sp_searchOps_blacklist_searchcnic @CNIC = ?";
+			$sql = "exec [sp_searchOps_blacklist_searchcnic] @CNIC = ?";
 			$params = array($value);
-			$getResults= sqlsrv_query($this->conSubDB, $sql, $params);
+			$getResults= sqlsrv_query($this->conPS, $sql, $params);
 			if( $getResults === false) {
 			die( print_r( sqlsrv_errors(), true) );
 			}
