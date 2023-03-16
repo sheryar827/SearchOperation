@@ -65,6 +65,28 @@
         }
 
 
+        public function getDLMSData($cnicForSubInfo){
+            $result = array();
+            
+            $value = $cnicForSubInfo;
+			$sql = "exec sp_searchOps_blacklist_searchcnic @CNIC = ?";
+			$params = array($value);
+			$getResults= sqlsrv_query($this->conSubDB, $sql, $params);
+			if( $getResults === false) {
+			die( print_r( sqlsrv_errors(), true) );
+			}
+			
+			while( $row = sqlsrv_fetch_array($getResults) ) {
+			  array_push($result,
+			  array('name'=>$row[0],'cnic'=>$row[1],'reference'=>$row[2]));
+			}
+			
+            return $result;
+			sqlsrv_free_stmt( $getResults);
+			
+		}
+
+
         // create new user in database
         public function uploadData($ps, 
         $lat, 
